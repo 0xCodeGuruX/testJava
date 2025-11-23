@@ -32,7 +32,7 @@ public class MenuState implements GameState {
 
     private void loadImages() {
         try {
-            mainMenuImage = new Image(getClass().getResourceAsStream("/main_menu.png")); // This should be tron0_0.jpg, changing later
+            mainMenuImage = new Image(getClass().getResourceAsStream("/tron0_0.jpg")); 
             playMenuImage = new Image(getClass().getResourceAsStream("/play_menu.jpg"));
             instructionsPageImage = new Image(getClass().getResourceAsStream("/instructions_page.png"));
 
@@ -48,6 +48,22 @@ public class MenuState implements GameState {
 
         } catch (Exception e) {
             System.err.println("Error loading menu images: " + e.getMessage());
+        }
+    }
+
+    private void renderMenuItems(GraphicsContext gc, List<Image> items, int selectedOption, double startY) {
+        double currentY = startY;
+        for (int i = 0; i < items.size(); i++) {
+            Image item = items.get(i);
+            double x = (Main.WINDOW_WIDTH - item.getWidth()) / 2;
+            if (i == selectedOption) {
+                gc.setGlobalAlpha(0.7); // Highlight selected
+            } else {
+                gc.setGlobalAlpha(1.0);
+            }
+            gc.drawImage(item, x, currentY);
+            currentY += item.getHeight() + 10; // Spacing between items
+            gc.setGlobalAlpha(1.0);
         }
     }
 
@@ -129,35 +145,13 @@ public class MenuState implements GameState {
                 gc.drawImage(playMenuImage, 0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
             }
             // Render Play menu options
-            for (int i = 0; i < playMenuItems.size(); i++) {
-                Image item = playMenuItems.get(i);
-                double x = (Main.WINDOW_WIDTH - item.getWidth()) / 2;
-                double y = Main.WINDOW_HEIGHT / 2.0 + (i * (item.getHeight() + 10)); // Adjust positioning
-                if (i == selectedPlayMenuOption) {
-                    gc.setGlobalAlpha(0.7); // Highlight selected
-                } else {
-                    gc.setGlobalAlpha(1.0);
-                }
-                gc.drawImage(item, x, y);
-                gc.setGlobalAlpha(1.0);
-            }
+            renderMenuItems(gc, playMenuItems, selectedPlayMenuOption, Main.WINDOW_HEIGHT / 2.0);
         } else {
             if (mainMenuImage != null) {
                 gc.drawImage(mainMenuImage, 0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
             }
             // Render Main menu options
-            for (int i = 0; i < mainMenuItems.size(); i++) {
-                Image item = mainMenuItems.get(i);
-                double x = (Main.WINDOW_WIDTH - item.getWidth()) / 2;
-                double y = Main.WINDOW_HEIGHT / 2.0 + (i * (item.getHeight() + 10)); // Adjust positioning
-                if (i == selectedMainMenuOption) {
-                    gc.setGlobalAlpha(0.7); // Highlight selected
-                } else {
-                    gc.setGlobalAlpha(1.0);
-                }
-                gc.drawImage(item, x, y);
-                gc.setGlobalAlpha(1.0);
-            }
+            renderMenuItems(gc, mainMenuItems, selectedMainMenuOption, Main.WINDOW_HEIGHT / 2.0);
         }
     }
 }
