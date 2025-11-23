@@ -25,7 +25,7 @@ public class PlayingState implements GameState {
                 currentMap = new TronMapTwoPlayerModel(2); // 2 players for two-player
                 break;
             case 3: // Story
-                // currentMap = new TronMapStoryModel(1); // will implement later
+                currentMap = new TronMapStoryModel(1); // 1 player for story mode (human)
                 break;
             default:
                 // Handle invalid game mode
@@ -41,6 +41,12 @@ public class PlayingState implements GameState {
         gc.strokeText("Entering PlayingState for mode: " + gameMode + " Score: " + currentMap.getScorePlayer1(), Main.WINDOW_WIDTH / 2 - 50, Main.WINDOW_HEIGHT / 2);
         if (currentMap != null) {
             currentMap.reset(); // Initialize game map, players based on gameMode
+            // Set all players for AI models, if any
+            for (PlayerModel p : currentMap.getPlayers()) {
+                if (p instanceof PlayerAIModel) {
+                    ((PlayerAIModel) p).setAllPlayers(currentMap.getPlayers());
+                }
+            }
         }
     }
 
