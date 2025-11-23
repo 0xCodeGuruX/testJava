@@ -12,8 +12,9 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
-    public static final int WIDTH = 500;
-    public static final int HEIGHT = 560;
+    public static final int WINDOW_WIDTH = 500;
+    public static final int WINDOW_HEIGHT = 560; // 500 for map + 60 for UI below map
+    public static final int MAP_DIMENSION = 500; // Map is square 500x500
 
     private GameStateManager gsm;
     private long lastTime = 0;
@@ -28,7 +29,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Tron");
 
-        Canvas canvas = new Canvas(WIDTH, HEIGHT);
+        Canvas canvas = new Canvas(WINDOW_WIDTH, WINDOW_HEIGHT);
         GraphicsContext gc = canvas.getGraphicsContext2D();
         
         StackPane root = new StackPane();
@@ -41,6 +42,8 @@ public class Main extends Application {
         primaryStage.show();
 
         gsm = GameStateManager.getInstance();
+        // Here, we could pass the GameStateManager to the MenuState constructor
+        // or just let the MenuState get the instance itself.
         gsm.push(new MenuState(gsm));
         
         lastTime = System.nanoTime();
@@ -53,7 +56,7 @@ public class Main extends Application {
 
                 gsm.update(deltaTime);
                 gsm.render(gc);
-                gsm.handleInput();
+                gsm.handleInput(); // Handle input once per frame
             }
         }.start();
     }

@@ -118,21 +118,21 @@ public class MenuState implements GameState {
 
     @Override
     public void render(GraphicsContext gc) {
-        gc.clearRect(0, 0, Main.WIDTH, Main.HEIGHT); // Clear canvas
+        gc.clearRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT); // Clear canvas
 
         if (showInstructions) {
             if (instructionsPageImage != null) {
-                gc.drawImage(instructionsPageImage, 0, 0, Main.WIDTH, Main.HEIGHT);
+                gc.drawImage(instructionsPageImage, 0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
             }
         } else if (showPlayMenu) {
             if (playMenuImage != null) {
-                gc.drawImage(playMenuImage, 0, 0, Main.WIDTH, Main.HEIGHT);
+                gc.drawImage(playMenuImage, 0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
             }
             // Render Play menu options
             for (int i = 0; i < playMenuItems.size(); i++) {
                 Image item = playMenuItems.get(i);
-                double x = (Main.WIDTH - item.getWidth()) / 2;
-                double y = Main.HEIGHT / 2.0 + (i * (item.getHeight() + 10)); // Adjust positioning
+                double x = (Main.WINDOW_WIDTH - item.getWidth()) / 2;
+                double y = Main.WINDOW_HEIGHT / 2.0 + (i * (item.getHeight() + 10)); // Adjust positioning
                 if (i == selectedPlayMenuOption) {
                     gc.setGlobalAlpha(0.7); // Highlight selected
                 } else {
@@ -143,13 +143,13 @@ public class MenuState implements GameState {
             }
         } else {
             if (mainMenuImage != null) {
-                gc.drawImage(mainMenuImage, 0, 0, Main.WIDTH, Main.HEIGHT);
+                gc.drawImage(mainMenuImage, 0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT);
             }
             // Render Main menu options
             for (int i = 0; i < mainMenuItems.size(); i++) {
                 Image item = mainMenuItems.get(i);
-                double x = (Main.WIDTH - item.getWidth()) / 2;
-                double y = Main.HEIGHT / 2.0 + (i * (item.getHeight() + 10)); // Adjust positioning
+                double x = (Main.WINDOW_WIDTH - item.getWidth()) / 2;
+                double y = Main.WINDOW_HEIGHT / 2.0 + (i * (item.getHeight() + 10)); // Adjust positioning
                 if (i == selectedMainMenuOption) {
                     gc.setGlobalAlpha(0.7); // Highlight selected
                 } else {

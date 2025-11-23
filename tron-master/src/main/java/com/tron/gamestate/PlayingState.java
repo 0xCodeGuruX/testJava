@@ -5,11 +5,14 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
+import com.tron.view.GameView; // Import GameView
+
 public class PlayingState implements GameState {
 
     private GameStateManager gsm;
     private int gameMode; // 1 for Survival, 2 for Two-Player, 3 for Story
     private TronMapModel currentMap; // The active game map model
+    private GameView gameView; // The view for rendering the game
 
     public PlayingState(GameStateManager gsm, int gameMode) {
         this.gsm = gsm;
@@ -30,11 +33,12 @@ public class PlayingState implements GameState {
                 gsm.pop(); // Go back to previous state
                 break;
         }
+        gameView = new GameView(currentMap); // Initialize the GameView with the current map model
     }
 
     @Override
     public void init() {
-        System.out.println("Entering PlayingState for mode: " + gameMode);
+        gc.strokeText("Entering PlayingState for mode: " + gameMode + " Score: " + currentMap.getScorePlayer1(), Main.WINDOW_WIDTH / 2 - 50, Main.WINDOW_HEIGHT / 2);
         if (currentMap != null) {
             currentMap.reset(); // Initialize game map, players based on gameMode
         }
@@ -64,13 +68,13 @@ public class PlayingState implements GameState {
 
     @Override
     public void render(GraphicsContext gc) {
-        gc.clearRect(0, 0, Main.WIDTH, Main.HEIGHT); // Clear canvas
+        gc.clearRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT); // Clear canvas
         if (currentMap != null) {
-            // TODO: Render game elements (map, players, scores)
-            // For now, drawing text
-            gc.strokeText("Playing Game Mode: " + gameMode + " Score: " + currentMap.getScorePlayer1(), Main.WIDTH / 2 - 50, Main.HEIGHT / 2);
+            gameView.render(gc); // Delegate rendering to GameView
+            // For now, drawing text for score over the game view
+            gc.strokeText("Playing Game Mode: " + gameMode + " Score: " + currentMap.getScorePlayer1(), 10, Main.MAP_DIMENSION + 20); // Position below map
         } else {
-            gc.strokeText("No Map Loaded for mode: " + gameMode, Main.WIDTH / 2 - 50, Main.HEIGHT / 2);
+            gc.strokeText("No Map Loaded for mode: " + gameMode, Main.WINDOW_WIDTH / 2 - 50, Main.WINDOW_HEIGHT / 2);
         }
     }
 }
