@@ -9,16 +9,35 @@ public class PlayingState implements GameState {
 
     private GameStateManager gsm;
     private int gameMode; // 1 for Survival, 2 for Two-Player, 3 for Story
+    private TronMapModel currentMap; // The active game map model
 
     public PlayingState(GameStateManager gsm, int gameMode) {
         this.gsm = gsm;
         this.gameMode = gameMode;
+        switch (gameMode) {
+            case 1: // Survival
+                currentMap = new TronMapSurvivalModel(1); // 1 player for survival
+                break;
+            case 2: // Two-Player
+                // currentMap = new TronMapTwoPlayerModel(2); // will implement later
+                break;
+            case 3: // Story
+                // currentMap = new TronMapStoryModel(1); // will implement later
+                break;
+            default:
+                // Handle invalid game mode
+                System.err.println("Invalid game mode: " + gameMode);
+                gsm.pop(); // Go back to previous state
+                break;
+        }
     }
 
     @Override
     public void init() {
         System.out.println("Entering PlayingState for mode: " + gameMode);
-        // TODO: Initialize game map, players based on gameMode
+        if (currentMap != null) {
+            currentMap.reset(); // Initialize game map, players based on gameMode
+        }
     }
 
     @Override
@@ -34,13 +53,24 @@ public class PlayingState implements GameState {
 
     @Override
     public void update(double dt) {
-        // TODO: Update game logic (player movement, collisions, etc.)
+        if (currentMap != null) {
+            currentMap.tick(dt);
+            // Check if game is over
+            if (!currentMap.isGameRunning()) {
+                gsm.pop(); // Go back to previous state (e.g., PlayMenuState) when game ends
+            }
+        }
     }
 
     @Override
     public void render(GraphicsContext gc) {
         gc.clearRect(0, 0, Main.WIDTH, Main.HEIGHT); // Clear canvas
-        // TODO: Render game elements (map, players, scores)
-        gc.strokeText("Playing Game Mode: " + gameMode, Main.WIDTH / 2 - 50, Main.HEIGHT / 2);
+        if (currentMap != null) {
+            // TODO: Render game elements (map, players, scores)
+            // For now, drawing text
+            gc.strokeText("Playing Game Mode: " + gameMode + " Score: " + currentMap.getScorePlayer1(), Main.WIDTH / 2 - 50, Main.HEIGHT / 2);
+        } else {
+            gc.strokeText("No Map Loaded for mode: " + gameMode, Main.WIDTH / 2 - 50, Main.HEIGHT / 2);
+        }
     }
 }
