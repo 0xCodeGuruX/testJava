@@ -134,29 +134,43 @@ public abstract class PlayerModel extends GameObjectModel {
         return false;
     }
 
-    // Helper for collision detection with a path segment
+    // Helper for collision detection with a path segment (more accurate)
     private boolean intersects(PathSegment segment) {
-        // Simplified AABB (Axis-Aligned Bounding Box) check against segment
-        // This is a basic check, more robust line-segment intersection might be needed for perfect accuracy
-        // For Tron, where players are small squares and paths are lines, this might suffice for initial implementation
-        
-        // Check if player's current position (a point) is close to the segment
-        // Or if player's bounding box intersects the segment.
-        // For simplicity, let's treat player as a point for path intersection for now
-        // This logic needs to be refined.
-        
-        // Check if the player's current head is "on" the segment
-        if (segment.isVertical()) {
-            return (Math.abs(x - segment.getStartX()) < width / 2 && // Player's X near segment X
-                    y >= Math.min(segment.getStartY(), segment.getEndY()) &&
-                    y <= Math.max(segment.getStartY(), segment.getEndY()));
-        } else if (segment.isHorizontal()) {
-            return (Math.abs(y - segment.getStartY()) < height / 2 && // Player's Y near segment Y
-                    x >= Math.min(segment.getStartX(), segment.getEndX()) &&
-                    x <= Math.max(segment.getStartX(), segment.getEndX()));
+        // Player's current position is treated as a point (x, y) with a bounding box (x-WIDTH/2, y-HEIGHT/2, WIDTH, HEIGHT)
+        // Check if player's bounding box intersects the given line segment
+
+        int playerMinX = x - WIDTH / 2;
+        int playerMaxX = x + WIDTH / 2;
+        int playerMinY = y - HEIGHT / 2;
+        int playerMaxY = y + HEIGHT / 2;
+
+        int segStartX = segment.getStartX();
+        int segStartY = segment.getStartY();
+        int segEndX = segment.getEndX();
+        int segEndY = segment.getEndY();
+
+        // Check if player's bounding box intersects with the line segment
+        // This is a basic AABB-line segment intersection test.
+
+        // Line segment horizontal
+        if (segStartY == segEndY) {
+            int lineMinX = Math.min(segStartX, segEndX);
+            int lineMaxX = Math.max(segStartX, segEndX);
+            int lineY = segStartY;
+
+            return (playerMaxY >= lineY && playerMinY <= lineY && playerMaxX >= lineMinX && playerMinX <= lineMaxX);
         }
-        return false; // Should not happen for Tron's axis-aligned paths
+        // Line segment vertical
+        else if (segStartX == segEndX) {
+            int lineMinY = Math.min(segStartY, segEndY);
+            int lineMaxY = Math.max(segStartY, segEndY);
+            int lineX = segStartX;
+
+            return (playerMaxX >= lineX && playerMinX <= lineX && playerMaxY >= lineMinY && playerMinY <= lineMaxY);
+        }
+        return false; // Should not happen for axis-aligned Tron paths
     }
+
 
     // Helper for collision detection with another player's bounding box
     private boolean intersects(int otherX, int otherY, int otherWidth, int otherHeight) {
