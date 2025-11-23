@@ -22,7 +22,7 @@ public class PlayingState implements GameState {
                 currentMap = new TronMapSurvivalModel(1); // 1 player for survival
                 break;
             case 2: // Two-Player
-                // currentMap = new TronMapTwoPlayerModel(2); // will implement later
+                currentMap = new TronMapTwoPlayerModel(2); // 2 players for two-player
                 break;
             case 3: // Story
                 // currentMap = new TronMapStoryModel(1); // will implement later
@@ -66,6 +66,37 @@ public class PlayingState implements GameState {
                         break;
                     case B:
                         currentMap.humanPlayer.startBoost();
+                        break;
+                    // Player 2 controls
+                    case A:
+                        if (currentMap instanceof TronMapTwoPlayerModel) {
+                            ((TronMapTwoPlayerModel) currentMap).getPlayer2().setDirection(PlayerModel.Direction.LEFT);
+                        }
+                        break;
+                    case D:
+                        if (currentMap instanceof TronMapTwoPlayerModel) {
+                            ((TronMapTwoPlayerModel) currentMap).getPlayer2().setDirection(PlayerModel.Direction.RIGHT);
+                        }
+                        break;
+                    case W:
+                        if (currentMap instanceof TronMapTwoPlayerModel) {
+                            ((TronMapTwoPlayerModel) currentMap).getPlayer2().setDirection(PlayerModel.Direction.UP);
+                        }
+                        break;
+                    case S:
+                        if (currentMap instanceof TronMapTwoPlayerModel) {
+                            ((TronMapTwoPlayerModel) currentMap).getPlayer2().setDirection(PlayerModel.Direction.DOWN);
+                        }
+                        break;
+                    case Q:
+                        if (currentMap instanceof TronMapTwoPlayerModel) {
+                            ((TronMapTwoPlayerModel) currentMap).getPlayer2().jump();
+                        }
+                        break;
+                    case DIGIT1: // Key '1' for boost
+                        if (currentMap instanceof TronMapTwoPlayerModel) {
+                            ((TronMapTwoPlayerModel) currentMap).getPlayer2().startBoost();
+                        }
                         break;
                     case ESCAPE:
                         // TODO: Implement pause menu or return to PlayMenuState
