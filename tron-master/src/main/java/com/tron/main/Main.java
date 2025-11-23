@@ -18,6 +18,12 @@ public class Main extends Application {
     private GameStateManager gsm;
     private long lastTime = 0;
 
+    private static Scene currentScene;
+
+    public static Scene getScene() {
+        return currentScene;
+    }
+
     @Override
     public void start(Stage primaryStage) {
         primaryStage.setTitle("Tron");
@@ -29,6 +35,7 @@ public class Main extends Application {
         root.getChildren().add(canvas);
         
         Scene scene = new Scene(root);
+        currentScene = scene; // Store the scene
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
