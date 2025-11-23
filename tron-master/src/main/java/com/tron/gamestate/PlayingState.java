@@ -5,7 +5,8 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-import com.tron.view.GameView; // Import GameView
+import com.tron.view.GameView;
+import com.tron.view.GameResultView; // Import GameResultView
 
 public class PlayingState implements GameState {
 
@@ -13,6 +14,7 @@ public class PlayingState implements GameState {
     private int gameMode; // 1 for Survival, 2 for Two-Player, 3 for Story
     private TronMapModel currentMap; // The active game map model
     private GameView gameView; // The view for rendering the game
+    private GameResultView gameResultView; // The view for rendering game outcomes
 
     public PlayingState(GameStateManager gsm, int gameMode) {
         this.gsm = gsm;
@@ -34,6 +36,7 @@ public class PlayingState implements GameState {
                 break;
         }
         gameView = new GameView(currentMap); // Initialize the GameView with the current map model
+        gameResultView = new GameResultView(); // Initialize GameResultView
     }
 
     @Override
@@ -133,6 +136,12 @@ public class PlayingState implements GameState {
         gc.clearRect(0, 0, Main.WINDOW_WIDTH, Main.WINDOW_HEIGHT); // Clear canvas
         if (currentMap != null) {
             gameView.render(gc); // Delegate rendering to GameView
+
+            // Render game results if game is not running
+            if (!currentMap.isGameRunning()) {
+                gameResultView.render(gc, currentMap);
+            }
+            
             // For now, drawing text for score over the game view
             gc.strokeText("Playing Game Mode: " + gameMode + " Score: " + currentMap.getScorePlayer1(), 10, Main.MAP_DIMENSION + 20); // Position below map
         } else {
