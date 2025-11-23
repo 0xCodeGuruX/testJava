@@ -94,11 +94,11 @@ public class MenuState implements GameState {
             selectedPlayMenuOption = (selectedPlayMenuOption + 1) % playMenuItems.size();
         } else if (event.getCode() == KeyCode.ENTER) {
             if (selectedPlayMenuOption == 0) { // Story
-                // TODO: Transition to Story GameState
+                gsm.setState(new PlayingState(gsm, 3)); // 3 for Story
             } else if (selectedPlayMenuOption == 1) { // Survival
-                // TODO: Transition to Survival GameState
+                gsm.setState(new PlayingState(gsm, 1)); // 1 for Survival
             } else if (selectedPlayMenuOption == 2) { // Two Player
-                // TODO: Transition to Two Player GameState
+                gsm.setState(new PlayingState(gsm, 2)); // 2 for Two Player
             }
         } else if (event.getCode() == KeyCode.ESCAPE) { // Back to main menu
             showPlayMenu = false;
