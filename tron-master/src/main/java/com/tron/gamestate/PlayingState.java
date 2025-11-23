@@ -6,7 +6,8 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
 import com.tron.view.GameView;
-import com.tron.view.GameResultView; // Import GameResultView
+import com.tron.view.GameResultView;
+import com.tron.view.ScoreView; // Import GameResultView
 
 public class PlayingState implements GameState {
 
@@ -15,6 +16,7 @@ public class PlayingState implements GameState {
     private TronMapModel currentMap; // The active game map model
     private GameView gameView; // The view for rendering the game
     private GameResultView gameResultView; // The view for rendering game outcomes
+    private ScoreView scoreView; // The view for rendering scores and info
 
     public PlayingState(GameStateManager gsm, int gameMode) {
         this.gsm = gsm;
@@ -37,6 +39,7 @@ public class PlayingState implements GameState {
         }
         gameView = new GameView(currentMap); // Initialize the GameView with the current map model
         gameResultView = new GameResultView(); // Initialize GameResultView
+        scoreView = new ScoreView(); // Initialize ScoreView
     }
 
     @Override
@@ -143,7 +146,7 @@ public class PlayingState implements GameState {
             }
             
             // For now, drawing text for score over the game view
-            gc.strokeText("Playing Game Mode: " + gameMode + " Score: " + currentMap.getScorePlayer1(), 10, Main.MAP_DIMENSION + 20); // Position below map
+            scoreView.render(gc, currentMap); // Delegate score rendering to ScoreView
         } else {
             gc.strokeText("No Map Loaded for mode: " + gameMode, Main.WINDOW_WIDTH / 2 - 50, Main.WINDOW_HEIGHT / 2);
         }
