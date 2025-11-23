@@ -47,11 +47,36 @@ public class PlayingState implements GameState {
     @Override
     public void handleInput() {
         Main.getScene().setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ESCAPE) {
-                // TODO: Pause menu or return to PlayMenuState
-                gsm.pop(); // For now, just pop back
+            if (currentMap != null && currentMap.isGameRunning() && currentMap.humanPlayer != null) {
+                switch (event.getCode()) {
+                    case LEFT:
+                        currentMap.humanPlayer.setDirection(PlayerModel.Direction.LEFT);
+                        break;
+                    case RIGHT:
+                        currentMap.humanPlayer.setDirection(PlayerModel.Direction.RIGHT);
+                        break;
+                    case UP:
+                        currentMap.humanPlayer.setDirection(PlayerModel.Direction.UP);
+                        break;
+                    case DOWN:
+                        currentMap.humanPlayer.setDirection(PlayerModel.Direction.DOWN);
+                        break;
+                    case SPACE:
+                        currentMap.humanPlayer.jump();
+                        break;
+                    case B:
+                        currentMap.humanPlayer.startBoost();
+                        break;
+                    case ESCAPE:
+                        // TODO: Implement pause menu or return to PlayMenuState
+                        gsm.pop(); // For now, just pop back
+                        break;
+                    default:
+                        break;
+                }
+            } else if (event.getCode() == KeyCode.ESCAPE) { // Allow escape to exit even if game not running
+                gsm.pop();
             }
-            // TODO: Handle player movement input
         });
     }
 
