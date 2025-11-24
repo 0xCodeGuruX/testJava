@@ -56,7 +56,9 @@
                 <configuration>
                     <source>${maven.compiler.source}</source>
                     <target>${maven.compiler.target}</target>
-                    <exclude>tron-master/src/main/java/com/tron/old_swing/**</exclude>
+                    <excludes>
+                        <exclude>tron-master/src/main/java/com/tron/old_swing/**</exclude>
+                    </excludes>
                 </configuration>
             </plugin>
         </plugins>

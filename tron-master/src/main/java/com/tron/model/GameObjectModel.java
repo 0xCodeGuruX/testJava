@@ -62,6 +62,12 @@ public abstract class GameObjectModel {
     // they need to be redefined or removed based on the specific needs of the model.
     // For now, I'm keeping similar abstract methods as placeholders for model-specific logic.
     public abstract boolean isAlive(); // Renamed from getAlive for better clarity in model
+    
+    public int getX() { return x; }
+    public int getY() { return y; }
+    public int getWidth() { return width; }
+    public int getHeight() { return height; }
+
     // Path handling will be more complex, likely involving a list of points or segments, not UI Shapes.
     // For now, removing getPath() as Shape is a UI-related class.
     // Collision detection will also need to be purely based on coordinates/geometry.

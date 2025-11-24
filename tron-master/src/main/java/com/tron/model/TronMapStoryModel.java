@@ -38,15 +38,14 @@ public class TronMapStoryModel extends TronMapModel {
         // Human player
         int[] startHuman = getRandomStart();
         humanPlayer = new PlayerHumanModel(startHuman[0], startHuman[1], startHuman[2], startHuman[3],
-                                           PlayerModel.WIDTH, PlayerModel.HEIGHT, TronColor.BLUE);
+                                           PlayerModel.WIDTH, PlayerModel.HEIGHT, PlayerModel.TronColor.BLUE);
         players.add(humanPlayer);
 
         // AI players (currentLevel - 1, starting from 1 for level 1)
         for (int i = 0; i < currentLevel && i < MAX_AI_PLAYERS; i++) {
             int[] startAI = getRandomStart();
-            TronColor aiColor = availableColors.get((i + 1) % availableColors.size()); // Cycle through colors
             PlayerAIModel aiPlayer = new PlayerAIModel(startAI[0], startAI[1], startAI[2], startAI[3],
-                                                     PlayerModel.WIDTH, PlayerModel.HEIGHT, aiColor);
+                                                     PlayerModel.WIDTH, PlayerModel.HEIGHT, availableColors.get((i + 1) % availableColors.size()));
             players.add(aiPlayer);
         }
 
@@ -92,7 +91,7 @@ public class TronMapStoryModel extends TronMapModel {
         if (humanPlayerCrashed) {
             gameOver = true;
             gameRunning = false;
-            addScore(); // Human player lost
+            addScore(0, scorePlayer1); // Human player lost, pass current score
             return;
         }
 
@@ -104,7 +103,7 @@ public class TronMapStoryModel extends TronMapModel {
         if (aliveAIPlayers.isEmpty() && currentLevel <= MAX_AI_PLAYERS) { // All AI defeated, and not max level
             levelWon = true;
             gameRunning = false; // Pause game for transition
-            addScore(); // Human player won the level
+            addScore(0, scorePlayer1); // Human player won the level, pass current score
         }
         
         // Update score (continuous for story mode?)

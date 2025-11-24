@@ -25,13 +25,13 @@ public class TronMapTwoPlayerModel extends TronMapModel {
         // Player 1
         int[] start1 = getRandomStart();
         humanPlayer = new PlayerHumanModel(start1[0], start1[1], start1[2], start1[3],
-                                           PlayerModel.WIDTH, PlayerModel.HEIGHT, TronColor.CYAN);
+                                           PlayerModel.WIDTH, PlayerModel.HEIGHT, PlayerModel.TronColor.CYAN);
         players.add(humanPlayer);
 
         // Player 2
         int[] start2 = getRandomStart();
         player2 = new PlayerHumanModel(start2[0], start2[1], start2[2], start2[3],
-                                           PlayerModel.WIDTH, PlayerModel.HEIGHT, TronColor.PINK);
+                                           PlayerModel.WIDTH, PlayerModel.HEIGHT, PlayerModel.TronColor.PINK);
         players.add(player2);
 
         humanPlayer.setAllPlayers(players); // PlayerAIModel has this, but PlayerHumanModel does not

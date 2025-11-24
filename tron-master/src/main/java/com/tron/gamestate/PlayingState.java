@@ -66,25 +66,25 @@ public class PlayingState implements GameState {
     @Override
     public void handleInput() {
         Main.getScene().setOnKeyPressed(event -> {
-            if (currentMap != null && currentMap.isGameRunning() && currentMap.humanPlayer != null) {
+            if (currentMap != null && currentMap.isGameRunning() && currentMap.getHumanPlayer() != null) {
                 switch (event.getCode()) {
                     case LEFT:
-                        currentMap.humanPlayer.setDirection(PlayerModel.Direction.LEFT);
+                        currentMap.getHumanPlayer().setDirection(PlayerModel.Direction.LEFT);
                         break;
                     case RIGHT:
-                        currentMap.humanPlayer.setDirection(PlayerModel.Direction.RIGHT);
+                        currentMap.getHumanPlayer().setDirection(PlayerModel.Direction.RIGHT);
                         break;
                     case UP:
-                        currentMap.humanPlayer.setDirection(PlayerModel.Direction.UP);
+                        currentMap.getHumanPlayer().setDirection(PlayerModel.Direction.UP);
                         break;
                     case DOWN:
-                        currentMap.humanPlayer.setDirection(PlayerModel.Direction.DOWN);
+                        currentMap.getHumanPlayer().setDirection(PlayerModel.Direction.DOWN);
                         break;
                     case SPACE:
-                        currentMap.humanPlayer.jump();
+                        currentMap.getHumanPlayer().jump();
                         break;
                     case B:
-                        currentMap.humanPlayer.startBoost();
+                        currentMap.getHumanPlayer().startBoost();
                         break;
                     // Player 2 controls
                     case A:
