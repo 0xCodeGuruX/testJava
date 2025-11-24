@@ -24,7 +24,7 @@ public class TronMapSurvivalModel extends TronMapModel {
         // Create human player (only one in survival mode)
         int[] start = getRandomStart();
         humanPlayer = new PlayerHumanModel(start[0], start[1], start[2], start[3], 
-                                           PlayerModel.WIDTH, PlayerModel.HEIGHT, PlayerModel.TronColor.CYAN);
+                                           PlayerModel.WIDTH, PlayerModel.HEIGHT, PlayerModel.TronColor.BLUE);
         players.add(humanPlayer);
         
         // Reset scores
