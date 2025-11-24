@@ -88,4 +88,9 @@ public abstract class TronMapModel {
     public List<PlayerModel> getPlayers() {
         return players;
     }
+
+    public PlayerHumanModel getHumanPlayer() {
+        return humanPlayer;
+    }
+
 }

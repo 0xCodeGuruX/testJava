@@ -3,6 +3,7 @@ package com.tron.view;
 import com.tron.model.PlayerModel;
 import com.tron.model.PathSegment;
 import com.tron.model.TronMapModel;
+import com.tron.main.Main; // Add this import
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 

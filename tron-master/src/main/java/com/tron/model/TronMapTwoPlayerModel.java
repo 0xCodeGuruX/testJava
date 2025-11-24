@@ -2,6 +2,7 @@ package com.tron.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import com.tron.model.PlayerModel.TronColor; // Add this import
 
 public class TronMapTwoPlayerModel extends TronMapModel {
 
@@ -33,10 +34,8 @@ public class TronMapTwoPlayerModel extends TronMapModel {
                                            PlayerModel.WIDTH, PlayerModel.HEIGHT, TronColor.PINK);
         players.add(player2);
 
-        // Make sure all players know about each other for collision
-        // (This might be better managed by a central GameWorld or CollisionManager)
-        humanPlayer.setAllPlayers(players);
-        player2.setAllPlayers(players);
+        humanPlayer.setAllPlayers(players); // PlayerAIModel has this, but PlayerHumanModel does not
+        player2.setAllPlayers(players); // PlayerAIModel has this, but PlayerHumanModel does not
         
         gameRunning = true;
     }
@@ -67,7 +66,8 @@ public class TronMapTwoPlayerModel extends TronMapModel {
 
         if (p1Crashed || p2Crashed) {
             gameRunning = false; // Round ends
-            addScore(p1Crashed, p2Crashed); // Update scores based on who crashed
+            // Call the abstract addScore with dummy values, actual score update will be in the new overridden method
+            this.addScore(0, 0); // Trigger final score update logic
         }
     }
 
@@ -76,8 +76,13 @@ public class TronMapTwoPlayerModel extends TronMapModel {
         // Scores are updated at the end of each round in addScore()
     }
 
-    // This method is called when a round ends
-    private void addScore(boolean p1Crashed, boolean p2Crashed) {
+    @Override // Override the abstract method from TronMapModel
+    public void addScore(int playerIndex, int scoreToAdd) {
+        // Based on who crashed in the last tick
+        // Determine winner and update scorePlayer1/scorePlayer2
+        boolean p1Crashed = !humanPlayer.isAlive();
+        boolean p2Crashed = !player2.isAlive();
+
         if (!p1Crashed && p2Crashed) { // Player 1 wins
             scorePlayer1++;
             lastMatchOutcome = MatchOutcome.P1_WINS;

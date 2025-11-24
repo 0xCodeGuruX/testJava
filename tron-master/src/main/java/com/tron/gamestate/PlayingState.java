@@ -1,5 +1,12 @@
 package com.tron.gamestate;
 
+import com.tron.model.TronMapModel;
+import com.tron.model.TronMapSurvivalModel;
+import com.tron.model.TronMapTwoPlayerModel;
+import com.tron.model.TronMapStoryModel;
+import com.tron.model.PlayerModel;
+import com.tron.model.PlayerAIModel; // Import PlayerAIModel
+import com.tron.model.PlayerHumanModel; // Import PlayerHumanModel
 import com.tron.main.Main;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
@@ -7,7 +14,7 @@ import javafx.scene.input.KeyEvent;
 
 import com.tron.view.GameView;
 import com.tron.view.GameResultView;
-import com.tron.view.ScoreView; // Import GameResultView
+import com.tron.view.ScoreView; // Import ScoreView
 
 public class PlayingState implements GameState {
 
@@ -44,7 +51,7 @@ public class PlayingState implements GameState {
 
     @Override
     public void init() {
-        gc.strokeText("Entering PlayingState for mode: " + gameMode + " Score: " + currentMap.getScorePlayer1(), Main.WINDOW_WIDTH / 2 - 50, Main.WINDOW_HEIGHT / 2);
+        System.out.println("Entering PlayingState for mode: " + gameMode);
         if (currentMap != null) {
             currentMap.reset(); // Initialize game map, players based on gameMode
             // Set all players for AI models, if any

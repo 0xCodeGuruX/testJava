@@ -1,5 +1,6 @@
 package com.tron.model;
 
+import com.tron.model.PlayerModel.TronColor; // Add this import
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -115,8 +116,8 @@ public class TronMapStoryModel extends TronMapModel {
         // Scores are updated at the end of each level in addScore()
     }
 
-    // This method is called when a level ends
-    private void addScore() {
+    @Override // Override the abstract method from TronMapModel
+    public void addScore(int playerIndex, int scoreToAdd) {
         if (levelWon) {
             scorePlayer1 += 50 * currentLevel; // Score based on level completed
             // Additional logic for high score, if any specific to story mode

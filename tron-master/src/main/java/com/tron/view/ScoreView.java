@@ -2,8 +2,10 @@ package com.tron.view;
 
 import com.tron.main.Main;
 import com.tron.model.TronMapModel;
-import com.tron.model.TronMapStoryModel;
+import com.tron.model.TronMapSurvivalModel;
 import com.tron.model.TronMapTwoPlayerModel;
+import com.tron.model.TronMapStoryModel;
+import com.tron.model.PlayerModel; // Add this import
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -26,12 +28,12 @@ public class ScoreView {
 
         if (mapModel instanceof TronMapSurvivalModel) {
             gc.fillText("Score: " + mapModel.getScorePlayer1() + 
-                        "   Boost: " + mapModel.humanPlayer.getBoostsLeft(), 
+                        "   Boost: " + mapModel.getHumanPlayer().getBoostsLeft(), 
                         10, Main.MAP_DIMENSION + 20);
         } else if (mapModel instanceof TronMapTwoPlayerModel) {
             TronMapTwoPlayerModel twoPlayerModel = (TronMapTwoPlayerModel) mapModel;
             gc.fillText("P1 Score: " + twoPlayerModel.getScorePlayer1() + 
-                        "   Boost: " + twoPlayerModel.humanPlayer.getBoostsLeft(), 
+                        "   Boost: " + twoPlayerModel.getHumanPlayer().getBoostsLeft(), 
                         10, Main.MAP_DIMENSION + 20);
             gc.fillText("P2 Score: " + twoPlayerModel.getScorePlayer2() + 
                         "   Boost: " + twoPlayerModel.getPlayer2().getBoostsLeft(), 
@@ -40,7 +42,7 @@ public class ScoreView {
             TronMapStoryModel storyModel = (TronMapStoryModel) mapModel;
             gc.fillText("Score: " + storyModel.getScorePlayer1() + 
                         "   Level: " + storyModel.getCurrentLevel() +
-                        "   Boost: " + storyModel.humanPlayer.getBoostsLeft(), 
+                        "   Boost: " + storyModel.getHumanPlayer().getBoostsLeft(), 
                         10, Main.MAP_DIMENSION + 20);
         }
     }
