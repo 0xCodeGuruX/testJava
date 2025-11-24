@@ -68,6 +68,13 @@ public abstract class GameObjectModel {
     public int getWidth() { return width; }
     public int getHeight() { return height; }
 
+    public int getVelocityX() { return velocityX; }
+    public int getVelocityY() { return velocityY; }
+
+    public void setX(int x) { this.x = x; }
+    public void setY(int y) { this.y = y; }
+
+
     // Path handling will be more complex, likely involving a list of points or segments, not UI Shapes.
     // For now, removing getPath() as Shape is a UI-related class.
     // Collision detection will also need to be purely based on coordinates/geometry.
